@@ -1,0 +1,47 @@
+//Modules
+const mongoose = require("mongoose");
+
+//Models
+
+const UserModel = mongoose.model("user");
+
+const createUser = async (email, hashed_password, username) => {
+  const user = new UserModel();
+
+  user.username = username;
+
+  user.password = hashed_password;
+  user.email = email;
+
+  console.time("\nUser save time");
+  await user.save();
+  console.timeEnd("\nUser save time");
+
+  delete user.password;
+  return user;
+};
+
+//Used for login
+const get_user_by_email_repository = async (email) => {
+  const filter = {
+    email: email,
+  };
+
+  const select = "_id email password username";
+  const user = await UserModel.findOne(filter)
+    .select(select)
+
+    .lean();
+  return user;
+};
+
+const user_exists_repository = async (filter) => {
+  const result = await UserModel.exists(filter).lean();
+  return result;
+};
+
+module.exports = {
+  user_exists_repository,
+  createUser,
+  get_user_by_email_repository,
+};
