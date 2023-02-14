@@ -3,12 +3,18 @@ const valid_user_function = require("../utils/users/register/valid_user");
 const hash_password = require("../utils/users/register/hash_password");
 const setJWT = require("../utils/users/login/setJWT");
 const throwError = require("../utils/shared/throwError");
+const validEmail = require("../utils/users/register/valid_email");
+const verify_password = require("../utils/users/login/verify_password");
 
 //import repositories
 const {
   createUser,
   get_user_by_email_repository,
 } = require("../repositories/user.repository");
+
+//import constants
+const constants = require("../constants/constants");
+const PASSWORD_MIN_REQUIRED_LENGTH = constants.PASSWORD_MIN_REQUIRED_LENGTH;
 
 const register_user_service = async (
   email,

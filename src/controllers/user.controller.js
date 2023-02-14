@@ -58,6 +58,58 @@ const register_user_controller = async (req, res) => {
   return await res.status(status).json(final_result);
 };
 
+//login user
+const login_user_controller = async (req, res) => {
+  res.setHeader("Content-Type", "application/json");
+  res.setHeader("Access-Control-Allow-Credentials", true);
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+
+  console.group("\nLogin");
+  console.time("login time");
+
+  const { email, password } = req.body;
+
+  const final_result = await user_services.login_user_service(email, password);
+
+  const status = final_result.status;
+
+  if (status === 200) {
+    const jwt = final_result.jwt;
+    await setCookie(res, jwt);
+  }
+
+  console.timeEnd("login time");
+  console.groupEnd("\nLogin");
+
+  return await res.status(status).json(final_result);
+};
+
+//logout
+const logout_controller = async (req, res) => {
+  console.log("req.cookies:", req.cookies);
+  //Clear cookies only if it is present since Mozilla Firefox browser causes warning if cleared cookies whoich are not present already.
+  if (req.cookies.jwt) {
+    await res.clearCookie("jwt");
+  } else {
+    console.warn("jwt cookie not found");
+  }
+
+  if (req.cookies.loggedIn) {
+    await res.clearCookie("loggedIn");
+  } else {
+    console.warn("LoggedIn cookie not found");
+  }
+
+  return await res
+    .status(200)
+    .json({ message: "Logged out successfully", status: 200 });
+};
+
 module.exports = {
   register_user_controller,
+  login_user_controller,
+  logout_controller,
 };
