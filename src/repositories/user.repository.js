@@ -59,9 +59,27 @@ const user_exists_repository = async (filter) => {
   return result;
 };
 
+//Add to cart
+const add_to_cart_repository = async (user_id, product_id) => {
+  const user = await UserModel.findById(user_id).select("cart").lean();
+
+  const previous_cart_products = user.cart || [];
+
+  previous_cart_products.push(product_id);
+
+  const filter = {
+    _id: user_id,
+  };
+  const update = {
+    cart: previous_cart_products,
+  };
+  await UserModel.updateOne(filter, update);
+};
+
 module.exports = {
   user_exists_repository,
   createUser,
   get_user_by_email_repository,
   getUserByIdRepository,
+  add_to_cart_repository,
 };

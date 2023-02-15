@@ -11,6 +11,7 @@ const {
   createUser,
   get_user_by_email_repository,
   getUserByIdRepository,
+  add_to_cart_repository,
 } = require("../repositories/user.repository");
 
 //import constants
@@ -177,8 +178,36 @@ const viewProfileService = async (user_id) => {
   }
 };
 
+const addToCartService = async (user_id, product_id) => {
+  try {
+    var result;
+
+    await add_to_cart_repository(user_id, product_id);
+
+    result = {
+      status: 200,
+      message: "Added to cart",
+    };
+
+    return result;
+  } catch (error) {
+    console.error("Try catch error caught");
+    console.error(error);
+
+    //check if error is class code 4.(Eg 400 , 401)
+    var class_code = error.status.toString()[0];
+
+    const result = {
+      message: class_code === "4" ? error.message : "Something went wrong",
+      status: error.status || 500,
+    };
+    return result;
+  }
+};
+
 module.exports = {
   register_user_service,
   login_user_service,
   viewProfileService,
+  addToCartService,
 };

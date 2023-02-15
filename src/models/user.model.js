@@ -40,6 +40,12 @@ var userSchema = new mongoose.Schema(
       type: String,
       default: "",
     },
+    cart: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "product",
+      },
+    ],
   },
   {
     timestamps: true,

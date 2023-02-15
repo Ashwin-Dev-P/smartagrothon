@@ -127,9 +127,19 @@ const viewProfileController = async (req, res) => {
   return await res.status(result.status).json(result);
 };
 
+//add to cart
+const addToCartController = async (req, res) => {
+  const { user_id } = req.body;
+  const { product_id } = req.params;
+
+  const result = await user_services.addToCartService(user_id, product_id);
+  return await res.status(result.status).json(result);
+};
+
 module.exports = {
   register_user_controller,
   login_user_controller,
   logout_controller,
   viewProfileController,
+  addToCartController,
 };

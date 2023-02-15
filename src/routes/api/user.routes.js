@@ -26,4 +26,10 @@ router.post(
 //logout
 router.post("/logout", user_controllers.logout_controller);
 
+//add to cart
+router.post(
+  "/add_to_cart/product_id/:product_id",
+  user_controllers.addToCartController
+);
+
 module.exports = router;
