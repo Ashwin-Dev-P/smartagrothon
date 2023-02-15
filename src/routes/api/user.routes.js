@@ -32,4 +32,7 @@ router.post(
   user_controllers.addToCartController
 );
 
+//add to cart
+router.get("/view_cart", user_controllers.viewCartController);
+
 module.exports = router;

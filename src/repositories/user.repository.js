@@ -76,10 +76,24 @@ const add_to_cart_repository = async (user_id, product_id) => {
   await UserModel.updateOne(filter, update);
 };
 
+//view cart
+const view_cart_repository = async (user_id) => {
+  const user = await UserModel.findById(user_id)
+    .select("cart")
+    .populate(
+      "cart",
+      "_id description quantity name price image farmer_id createdAt"
+    )
+    .lean();
+  console.log(user);
+  return user.cart || [];
+};
+
 module.exports = {
   user_exists_repository,
   createUser,
   get_user_by_email_repository,
   getUserByIdRepository,
   add_to_cart_repository,
+  view_cart_repository,
 };
