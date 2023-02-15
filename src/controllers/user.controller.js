@@ -119,8 +119,17 @@ const logout_controller = async (req, res) => {
     .json({ message: "Logged out successfully", status: 200 });
 };
 
+//view profile
+const viewProfileController = async (req, res) => {
+  const { user_id } = req.params;
+
+  const result = await user_services.viewProfileService(user_id);
+  return await res.status(result.status).json(result);
+};
+
 module.exports = {
   register_user_controller,
   login_user_controller,
   logout_controller,
+  viewProfileController,
 };

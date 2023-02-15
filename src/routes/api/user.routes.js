@@ -6,6 +6,9 @@ const user_controllers = require("../../controllers/user.controller");
 
 //routes
 
+//view profile
+router.get("/profile/:user_id", user_controllers.viewProfileController);
+
 //login user
 router.post(
   "/login",

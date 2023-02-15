@@ -5,6 +5,14 @@ const mongoose = require("mongoose");
 
 const UserModel = mongoose.model("user");
 
+//repositories
+
+//view profile
+const getUserByIdRepository = async (user_id) => {
+  const select = "-__v -updatedAt -password -createdAt";
+  return await UserModel.findById(user_id).select(select).lean();
+};
+
 const createUser = async (
   email,
   hashed_password,
@@ -55,4 +63,5 @@ module.exports = {
   user_exists_repository,
   createUser,
   get_user_by_email_repository,
+  getUserByIdRepository,
 };

@@ -10,6 +10,7 @@ const verify_password = require("../utils/users/login/verify_password");
 const {
   createUser,
   get_user_by_email_repository,
+  getUserByIdRepository,
 } = require("../repositories/user.repository");
 
 //import constants
@@ -149,7 +150,35 @@ const login_user_service = async (email, password) => {
   }
 };
 
+//view profile
+const viewProfileService = async (user_id) => {
+  try {
+    var result;
+
+    const profile_details = await getUserByIdRepository(user_id);
+    result = {
+      status: 200,
+      profile_details: profile_details,
+    };
+
+    return result;
+  } catch (error) {
+    console.error("Try catch error caught");
+    console.error(error);
+
+    //check if error is class code 4.(Eg 400 , 401)
+    var class_code = error.status.toString()[0];
+
+    const result = {
+      message: class_code === "4" ? error.message : "Something went wrong",
+      status: error.status || 500,
+    };
+    return result;
+  }
+};
+
 module.exports = {
   register_user_service,
   login_user_service,
+  viewProfileService,
 };
