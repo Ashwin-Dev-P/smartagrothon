@@ -28,9 +28,9 @@ var userSchema = new mongoose.Schema(
       required: true,
       minlength: 1,
     },
-    veg: {
-      type: Boolean,
-      default: true,
+    type: {
+      type: Number,
+      default: 0,
     },
     address: {
       type: String,
