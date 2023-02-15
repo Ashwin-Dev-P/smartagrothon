@@ -37,7 +37,15 @@ const register_user_controller = async (req, res) => {
     return res.status(400).json(result);
   }
 
-  const { email, password, password_confirmation, username } = req.body;
+  const {
+    email,
+    password,
+    password_confirmation,
+    username,
+    address,
+    phone_number,
+    type,
+  } = req.body;
 
   console.group("User registration");
 
@@ -45,7 +53,10 @@ const register_user_controller = async (req, res) => {
     email,
     password,
     password_confirmation,
-    username
+    username,
+    address,
+    phone_number,
+    type
   );
   const status = final_result.status;
 

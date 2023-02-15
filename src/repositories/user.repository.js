@@ -5,13 +5,24 @@ const mongoose = require("mongoose");
 
 const UserModel = mongoose.model("user");
 
-const createUser = async (email, hashed_password, username) => {
+const createUser = async (
+  email,
+  hashed_password,
+  username,
+  address,
+  phone_number,
+  type
+) => {
   const user = new UserModel();
 
   user.username = username;
 
   user.password = hashed_password;
   user.email = email;
+
+  user.address = address;
+  user.phone_number = phone_number;
+  user.type = type;
 
   console.time("\nUser save time");
   await user.save();
@@ -27,7 +38,7 @@ const get_user_by_email_repository = async (email) => {
     email: email,
   };
 
-  const select = "_id email password username";
+  const select = "_id email password username type phone_number address";
   const user = await UserModel.findOne(filter)
     .select(select)
 

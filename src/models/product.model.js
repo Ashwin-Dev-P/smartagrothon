@@ -15,8 +15,7 @@ var productSchema = new mongoose.Schema(
     description: {
       type: String,
       trim: true,
-      required: false,
-      minlength: 1,
+
       default: "",
     },
     quantity: {
@@ -28,10 +27,10 @@ var productSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    type: {
-      type: Number,
+    veg: {
+      type: Boolean,
 
-      default: 0,
+      default: true,
     },
     farmer_id: {
       type: mongoose.Schema.Types.ObjectId,

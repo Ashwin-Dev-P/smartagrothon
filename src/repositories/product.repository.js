@@ -4,8 +4,9 @@ const mongoose = require("mongoose");
 //Models
 const ProductModel = mongoose.model("product");
 
+//NOT IN USE
 //Get products
-const getProductByFarmerRepository = async (user_id) => {
+const getProductByFarmerRepository = async (farmer_id) => {
   const filter = {
     farmer_id: user_id,
   };
@@ -20,7 +21,7 @@ const uploadProductRepository = async (
   description,
   quantity,
   image,
-  type,
+  veg,
   farmer_id
 ) => {
   var product_object = await new ProductModel();
@@ -30,7 +31,7 @@ const uploadProductRepository = async (
   product_object.description = description;
   product_object.quantity = quantity;
   product_object.image = image;
-  product_object.type = type;
+  product_object.veg = veg;
   product_object.farmer_id = farmer_id;
 
   await product_object.save();
@@ -38,7 +39,37 @@ const uploadProductRepository = async (
   return product_object;
 };
 
+//get fruits
+const getFruitsRepository = async () => {
+  filter = {
+    veg: false,
+  };
+  const select =
+    "name price description quantity image farmer_id createdAt description";
+  const products = await ProductModel.find(filter)
+    .select(select)
+    .sort({ createdAt: -1 })
+    .lean();
+  return products;
+};
+
+//get vegetables
+const getVegetablesRepository = async () => {
+  filter = {
+    veg: true,
+  };
+  const select =
+    "name price description quantity image farmer_id createdAt description";
+  const products = await ProductModel.find(filter)
+    .select(select)
+    .sort({ createdAt: -1 })
+    .lean();
+  return products;
+};
+
 module.exports = {
   getProductByFarmerRepository,
   uploadProductRepository,
+  getVegetablesRepository,
+  getFruitsRepository,
 };

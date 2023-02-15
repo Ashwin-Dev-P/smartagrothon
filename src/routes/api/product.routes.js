@@ -11,4 +11,8 @@ router.post(
   product_controllers.uploadProductController
 );
 
+router.get("/fruits", product_controllers.getFruitsController);
+
+router.get("/vegetables", product_controllers.getVegetablesController);
+
 module.exports = router;

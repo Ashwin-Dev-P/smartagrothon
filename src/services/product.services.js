@@ -11,7 +11,7 @@ const uploadProductService = async (
   description,
   quantity,
   image,
-  type,
+  veg,
   farmer_id
 ) => {
   try {
@@ -25,7 +25,7 @@ const uploadProductService = async (
       description,
       quantity,
       image,
-      type,
+      veg,
       farmer_id
     );
 
@@ -47,6 +47,83 @@ const uploadProductService = async (
   }
 };
 
+//get vegetables
+const getVegetablesService = async () => {
+  try {
+    var result;
+
+    const vegetables = await product_repositories.getVegetablesRepository();
+
+    result = {
+      vegetables: vegetables,
+      status: 200,
+    };
+
+    return result;
+  } catch (error) {
+    console.error("Try catch error caught");
+    console.error(error);
+    const result = {
+      message: error.status === 400 ? error.message : "Something went wrong",
+      status: error.status || 500,
+    };
+    return result;
+  }
+};
+
+//get fruits
+const getFruitsService = async () => {
+  try {
+    var result;
+
+    const fruits = await product_repositories.getFruitsRepository();
+
+    result = {
+      fruits: fruits,
+      status: 200,
+    };
+
+    return result;
+  } catch (error) {
+    console.error("Try catch error caught");
+    console.error(error);
+    const result = {
+      message: error.status === 400 ? error.message : "Something went wrong",
+      status: error.status || 500,
+    };
+    return result;
+  }
+};
+
+//NOT IN USE
+const getProductByFarmerService = async (farmer_id) => {
+  try {
+    var result;
+
+    const products = await product_repositories.getProductByFarmerRepository(
+      farmer_id
+    );
+
+    result = {
+      products: products,
+      status: 200,
+    };
+
+    return result;
+  } catch (error) {
+    console.error("Try catch error caught");
+    console.error(error);
+    const result = {
+      message: error.status === 400 ? error.message : "Something went wrong",
+      status: error.status || 500,
+    };
+    return result;
+  }
+};
+
 module.exports = {
   uploadProductService,
+  getProductByFarmerService,
+  getVegetablesService,
+  getFruitsService,
 };

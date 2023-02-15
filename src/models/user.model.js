@@ -1,5 +1,10 @@
 const mongoose = require("mongoose");
 
+/*
+type
+0 - vegetable
+1 - fruit
+*/
 
 var userSchema = new mongoose.Schema(
   {
@@ -23,12 +28,22 @@ var userSchema = new mongoose.Schema(
       required: true,
       minlength: 1,
     },
-    
+    veg: {
+      type: Boolean,
+      default: true,
+    },
+    address: {
+      type: String,
+      default: "",
+    },
+    phone_number: {
+      type: String,
+      default: "",
+    },
   },
   {
     timestamps: true,
   }
 );
-
 
 mongoose.model("user", userSchema);

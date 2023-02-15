@@ -20,7 +20,10 @@ const register_user_service = async (
   email,
   password,
   password_confirmation,
-  username
+  username,
+  address,
+  phone_number,
+  type
 ) => {
   try {
     var result;
@@ -37,7 +40,14 @@ const register_user_service = async (
     const hashed_password = hash_password_result.hashed_password;
 
     try {
-      const user = await createUser(email, hashed_password, username);
+      const user = await createUser(
+        email,
+        hashed_password,
+        username,
+        address,
+        phone_number,
+        type
+      );
 
       const json_web_token = await setJWT(user._id);
 

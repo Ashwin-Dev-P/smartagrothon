@@ -12,7 +12,7 @@ const uploadProductController = async (req, res) => {
     return res.status(400).json(result);
   }
 
-  const { name, price, description, quantity, image, type, farmer_id } =
+  const { name, price, description, quantity, image, veg, farmer_id } =
     req.body;
 
   const result = await product_services.uploadProductService(
@@ -21,12 +21,24 @@ const uploadProductController = async (req, res) => {
     description,
     quantity,
     image,
-    type,
+    veg,
     farmer_id
   );
   return await res.status(200).json(result);
 };
 
+const getFruitsController = async (req, res) => {
+  const result = await product_services.getFruitsService();
+  return await res.status(result.status).json(result);
+};
+
+const getVegetablesController = async (req, res) => {
+  const result = await product_services.getVegetablesService();
+  return await res.status(result.status).json(result);
+};
+
 module.exports = {
   uploadProductController,
+  getFruitsController,
+  getVegetablesController,
 };
