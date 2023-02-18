@@ -51,6 +51,7 @@ const get_user_by_email_repository = async (email) => {
     .select(select)
 
     .lean();
+  console.log("user repos:", user);
   return user;
 };
 

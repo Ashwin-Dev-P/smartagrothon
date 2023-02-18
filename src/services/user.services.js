@@ -57,6 +57,7 @@ const register_user_service = async (
       const user_data = {
         email: user.email,
         username: user.username,
+        type: user.type,
       };
       result = {
         message: "Registered successfully",

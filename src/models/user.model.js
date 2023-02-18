@@ -2,8 +2,8 @@ const mongoose = require("mongoose");
 
 /*
 type
-0 - vegetable
-1 - fruit
+0 - farmer
+1 - consumer
 */
 
 var userSchema = new mongoose.Schema(
