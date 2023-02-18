@@ -11,9 +11,10 @@ const cookieParser = require("cookie-parser");
 app.use(cookieParser());
 
 var cors = require("cors");
+const front_end_url = process.env.FRONT_END_URL;
 var corsOptions = {
   credentials: true,
-  origin: ["*"],
+  origin: front_end_url,
   optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
 };
 
