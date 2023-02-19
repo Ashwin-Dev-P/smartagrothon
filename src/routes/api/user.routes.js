@@ -33,6 +33,6 @@ router.post(
 );
 
 //view cart
-router.get("/view_cart", user_controllers.viewCartController);
+router.post("/view_cart", user_controllers.viewCartController);
 
 module.exports = router;
