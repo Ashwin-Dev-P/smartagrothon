@@ -15,4 +15,6 @@ router.get("/fruits", product_controllers.getFruitsController);
 
 router.get("/vegetables", product_controllers.getVegetablesController);
 
+router.get("/details/:_id", product_controllers.getProductDetailsController);
+
 module.exports = router;

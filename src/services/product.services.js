@@ -121,9 +121,34 @@ const getProductByFarmerService = async (farmer_id) => {
   }
 };
 
+//Get product details service
+const getProductDetailsService = async (_id) => {
+  try {
+    var result;
+
+    const product_details =
+      await product_repositories.getProductDetailsRepository(_id);
+
+    result = {
+      product_details,
+      status: 200,
+    };
+    return result;
+  } catch (error) {
+    console.error("Try catch error caught");
+    console.error(error);
+    const result = {
+      message: error.status === 400 ? error.message : "Something went wrong",
+      status: error.status || 500,
+    };
+    return result;
+  }
+};
+
 module.exports = {
   uploadProductService,
   getProductByFarmerService,
   getVegetablesService,
   getFruitsService,
+  getProductDetailsService,
 };

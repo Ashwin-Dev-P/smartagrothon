@@ -37,8 +37,15 @@ const getVegetablesController = async (req, res) => {
   return await res.status(result.status).json(result);
 };
 
+const getProductDetailsController = async (req, res) => {
+  const { _id } = req.params;
+  const result = await product_services.getProductDetailsService(_id);
+  return await res.status(result.status).json(result);
+};
+
 module.exports = {
   uploadProductController,
   getFruitsController,
   getVegetablesController,
+  getProductDetailsController,
 };

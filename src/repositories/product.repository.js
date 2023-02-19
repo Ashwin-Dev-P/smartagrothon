@@ -67,9 +67,18 @@ const getVegetablesRepository = async () => {
   return products;
 };
 
+const getProductDetailsRepository = async (_id) => {
+  const select = "-__v -updatedAt -createdAt -farmer_id";
+  const product_details = await ProductModel.findById(_id)
+    .select(select)
+    .lean();
+  return product_details;
+};
+
 module.exports = {
   getProductByFarmerRepository,
   uploadProductRepository,
   getVegetablesRepository,
   getFruitsRepository,
+  getProductDetailsRepository,
 };
