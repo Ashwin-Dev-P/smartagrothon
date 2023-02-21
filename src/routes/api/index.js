@@ -7,10 +7,21 @@ const shared_controllers = require("../../controllers/shared.controller");
 //import routes
 const user_routes = require("./user.routes");
 const product_routes = require("./product.routes");
+const payment_routes = require("./payment.routes");
 
 //routes
 router.use("/user", user_routes);
 router.use("/product", product_routes);
+router.use("/payment", payment_routes);
+
+
+
+// //paytm=======================================
+
+// app.use("/", require("./routes/server"));
+
+// // =============================================
+
 
 //Method or route not found
 router.all("*", shared_controllers.method_not_found_controller);
