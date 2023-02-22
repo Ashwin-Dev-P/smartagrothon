@@ -75,6 +75,17 @@ const getProductDetailsRepository = async (_id) => {
   return product_details;
 };
 
+const getProductsOfFarmerRepository = async(farmer_id)=>{
+  const filter = {
+    farmer_id: farmer_id
+  }
+  
+  const select = "-__v -farmer_id";
+  const product = await ProductModel.find(filter).select(select).lean();
+
+  return product;
+}
+
 module.exports = {
   getProductByFarmerRepository,
   uploadProductRepository,
@@ -82,4 +93,5 @@ module.exports = {
   getFruitsRepository,
   getProductDetailsRepository,
   getProductByFarmerRepository,
+  getProductsOfFarmerRepository,
 };

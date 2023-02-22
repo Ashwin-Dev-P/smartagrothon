@@ -41,4 +41,7 @@ router.put("/location",user_controllers.updateLocationController);
 //get farmers
 router.get("/farmers",user_controllers.getFarmersController);
 
+//get farmer details
+router.get("/farmer/:farmer_id",user_controllers.getFarmerDetailsController);
+
 module.exports = router;

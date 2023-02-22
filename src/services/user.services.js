@@ -15,10 +15,12 @@ const {
   view_cart_repository,
   updateLocationRepository,
   getFarmersRepository,
+  getFarmerDetailsRepository,
 } = require("../repositories/user.repository");
 
 //import constants
 const constants = require("../constants/constants");
+const { getProductsOfFarmerRepository } = require("../repositories/product.repository");
 const PASSWORD_MIN_REQUIRED_LENGTH = constants.PASSWORD_MIN_REQUIRED_LENGTH;
 
 const register_user_service = async (
@@ -289,6 +291,39 @@ const getFarmersService = async()=>{
   }
 }
 
+const getFarmerDetailsService = async(farmer_id)=>{
+  try{
+    console.log(farmer_id)
+    const details = await getFarmerDetailsRepository(farmer_id);
+
+    console.log(farmer_id);
+    const products = await getProductsOfFarmerRepository(farmer_id);
+
+    const farmer_details = {
+      details: details,
+      products: products
+    }
+    const result = {
+      farmer_details,
+      status: 200,
+    }
+
+    return result;
+  }
+  catch(error){
+    console.error("Try catch error caught");
+    console.error(error);
+
+    //check if error is class code 4.(Eg 400 , 401)
+    var class_code = error.status.toString()[0];
+
+    const result = {
+      message: class_code === "4" ? error.message : "Something went wrong",
+      status: error.status || 500,
+    };
+    return result;
+  }
+}
 module.exports = {
   register_user_service,
   login_user_service,
@@ -297,4 +332,5 @@ module.exports = {
   viewCartService,
   updateLocationService,
   getFarmersService,
+  getFarmerDetailsService,
 };

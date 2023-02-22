@@ -158,6 +158,13 @@ const getFarmersController = async(req, res)=>{
   return await res.status(result.status).json(result);
 }
 
+//get farmer details
+const getFarmerDetailsController = async(req, res)=>{
+  const { farmer_id } = req.params;
+  const result = await user_services.getFarmerDetailsService(farmer_id);
+  return await res.status(result.status).json(result);
+}
+
 module.exports = {
   register_user_controller,
   login_user_controller,
@@ -167,4 +174,5 @@ module.exports = {
   viewCartController,
   updateLocationController,
   getFarmersController,
+  getFarmerDetailsController,
 };
