@@ -105,7 +105,9 @@ const updateLocationRepository = async (user_id, location) => {
 //get farmers
 const getFarmersRepository = async () => {
 	const filter = { type: 0 };
-	return await UserModel.find(filter).select("username").lean();
+	return await UserModel.find(filter)
+		.select("username address phone_number email location")
+		.lean();
 };
 
 //get farmer details
