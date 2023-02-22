@@ -8,7 +8,7 @@ const ProductModel = mongoose.model("product");
 //Get products
 const getProductByFarmerRepository = async (farmer_id) => {
   const filter = {
-    farmer_id: user_id,
+    farmer_id: farmer_id,
   };
   const products = await ProductModel.findAll(filter).lean();
   return products;
@@ -81,4 +81,5 @@ module.exports = {
   getVegetablesRepository,
   getFruitsRepository,
   getProductDetailsRepository,
+  getProductByFarmerRepository,
 };

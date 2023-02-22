@@ -95,7 +95,7 @@ const getFruitsService = async () => {
   }
 };
 
-//NOT IN USE
+//Get products of a farmer
 const getProductByFarmerService = async (farmer_id) => {
   try {
     var result;

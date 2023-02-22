@@ -38,4 +38,7 @@ router.post("/view_cart", user_controllers.viewCartController);
 //update location
 router.put("/location",user_controllers.updateLocationController);
 
+//get farmers
+router.get("/farmers",user_controllers.getFarmersController);
+
 module.exports = router;

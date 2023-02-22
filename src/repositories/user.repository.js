@@ -102,6 +102,13 @@ const updateLocationRepository = async(user_id,location)=>{
   await UserModel.updateOne( filter, update );
 }
 
+//get farmers
+const getFarmersRepository = async()=>{
+  const filter = { type: 0 };
+  return await UserModel.find(filter).select("username").lean();
+
+}
+
 module.exports = {
   user_exists_repository,
   createUser,
@@ -110,4 +117,5 @@ module.exports = {
   add_to_cart_repository,
   view_cart_repository,
   updateLocationRepository,
+  getFarmersRepository,
 };

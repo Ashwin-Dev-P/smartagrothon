@@ -152,6 +152,12 @@ const updateLocationController = async(req, res)=>{
   return await res.status(result.status).json(result);
 }
 
+//get farmers
+const getFarmersController = async(req, res)=>{
+  const result = await user_services.getFarmersService();
+  return await res.status(result.status).json(result);
+}
+
 module.exports = {
   register_user_controller,
   login_user_controller,
@@ -160,4 +166,5 @@ module.exports = {
   addToCartController,
   viewCartController,
   updateLocationController,
+  getFarmersController,
 };

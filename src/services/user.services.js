@@ -14,6 +14,7 @@ const {
   add_to_cart_repository,
   view_cart_repository,
   updateLocationRepository,
+  getFarmersRepository,
 } = require("../repositories/user.repository");
 
 //import constants
@@ -264,6 +265,30 @@ const updateLocationService = async(user_id, location)=>{
   }
 }
 
+const getFarmersService = async()=>{
+  try{
+    var farmers = await getFarmersRepository();
+    var result = {
+      farmers,
+      status: 200,
+    }
+
+    return result;
+  }catch(error){
+    console.error("Try catch error caught");
+    console.error(error);
+
+    //check if error is class code 4.(Eg 400 , 401)
+    var class_code = error.status.toString()[0];
+
+    const result = {
+      message: class_code === "4" ? error.message : "Something went wrong",
+      status: error.status || 500,
+    };
+    return result;
+  }
+}
+
 module.exports = {
   register_user_service,
   login_user_service,
@@ -271,4 +296,5 @@ module.exports = {
   addToCartService,
   viewCartService,
   updateLocationService,
+  getFarmersService,
 };
