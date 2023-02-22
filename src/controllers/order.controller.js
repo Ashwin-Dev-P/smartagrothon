@@ -23,7 +23,18 @@ const getOrderHistoryController = async (req, res) => {
 	return await res.status(result.status).json(result);
 };
 
+const getOrderHistoryForFarmerController = async (req, res) => {
+	const { farmer_id, status } = req.body;
+
+	const result = await order_services.getOrderHistoryForFarmerService(
+		farmer_id,
+		status,
+	);
+	return await res.status(result.status).json(result);
+};
+
 module.exports = {
 	makeOrderController,
 	getOrderHistoryController,
+	getOrderHistoryForFarmerController,
 };

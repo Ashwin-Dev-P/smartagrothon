@@ -14,4 +14,10 @@ router.post(
 //get order history
 router.post("/order_history", order_controllers.getOrderHistoryController);
 
+//get order history
+router.post(
+	"/order_history_farmer",
+	order_controllers.getOrderHistoryForFarmerController,
+);
+
 module.exports = router;

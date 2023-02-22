@@ -31,7 +31,24 @@ const getOrderHistoryRepository = async (consumer_id, status) => {
 	return order_history;
 };
 
+const getOrderHistoryForFarmerRepository = async (farmer_id, status) => {
+	console.log(farmer_id);
+	const filter = {
+		farmer_id: farmer_id,
+		status: status,
+	};
+	const order_history = await OrderModel.find(filter)
+		.select("product_ids createdAt updatedAt status")
+		//.populate("farmer_ids", "address phone_number location username email")
+		//.populate("consumer_id", "address phone_number location username email")
+		.populate("product_ids", "name price image quantity")
+		.lean();
+
+	return order_history;
+};
+
 module.exports = {
 	submitOrderRepository,
 	getOrderHistoryRepository,
+	getOrderHistoryForFarmerRepository,
 };
