@@ -26,6 +26,7 @@ const getOrderHistoryRepository = async (consumer_id, status) => {
 		//.populate("farmer_ids", "address phone_number location username email")
 		//.populate("consumer_id", "address phone_number location username email")
 		.populate("product_ids", "name price image quantity")
+		.sort("status -createdAt")
 		.lean();
 
 	return order_history;
