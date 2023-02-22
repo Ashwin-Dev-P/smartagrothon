@@ -13,6 +13,14 @@ const makeOrderController = async (req, res) => {
 	return await res.status(result.status).json(result);
 };
 
+const getOrderHistoryController = async (req, res) => {
+	const { consumer_id } = req.body;
+
+	const result = await order_services.getOrderHistoryService(consumer_id);
+	return await res.status(result.status).json(result);
+};
+
 module.exports = {
 	makeOrderController,
+	getOrderHistoryController,
 };

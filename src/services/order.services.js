@@ -27,6 +27,31 @@ const makeOrdersService = async (consumer_id, product_ids, farmer_ids) => {
 	}
 };
 
+//get order history
+const getOrderHistoryService = async (consumer_id) => {
+	try {
+		const order_history = await order_repositories.getOrderHistoryRepository(
+			consumer_id,
+		);
+
+		const result = {
+			order_history,
+			status: 200,
+		};
+
+		return result;
+	} catch (error) {
+		console.error("Try catch error caught");
+		console.error(error);
+		const result = {
+			message: error.status === 400 ? error.message : "Something went wrong",
+			status: error.status || 500,
+		};
+		return result;
+	}
+};
+
 module.exports = {
 	makeOrdersService,
+	getOrderHistoryService,
 };
