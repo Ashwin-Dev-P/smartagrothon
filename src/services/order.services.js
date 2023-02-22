@@ -28,10 +28,11 @@ const makeOrdersService = async (consumer_id, product_ids, farmer_ids) => {
 };
 
 //get order history
-const getOrderHistoryService = async (consumer_id) => {
+const getOrderHistoryService = async (consumer_id, status) => {
 	try {
 		const order_history = await order_repositories.getOrderHistoryRepository(
 			consumer_id,
+			status,
 		);
 
 		const result = {

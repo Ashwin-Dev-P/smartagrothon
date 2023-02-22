@@ -14,9 +14,12 @@ const makeOrderController = async (req, res) => {
 };
 
 const getOrderHistoryController = async (req, res) => {
-	const { consumer_id } = req.body;
+	const { consumer_id, status } = req.body;
 
-	const result = await order_services.getOrderHistoryService(consumer_id);
+	const result = await order_services.getOrderHistoryService(
+		consumer_id,
+		status,
+	);
 	return await res.status(result.status).json(result);
 };
 
