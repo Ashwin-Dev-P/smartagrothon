@@ -1,8 +1,16 @@
+/*
+status
+0 pending
+1 transportation
+2 delivered
+
+*/
+
 const mongoose = require("mongoose");
 
 var orderSchema = new mongoose.Schema(
 	{
-		cart: [
+		product_ids: [
 			{
 				type: mongoose.Schema.Types.ObjectId,
 				ref: "product",
@@ -13,9 +21,16 @@ var orderSchema = new mongoose.Schema(
 			type: mongoose.Schema.Types.ObjectId,
 			ref: "user",
 		},
-		farmer_id: {
-			type: mongoose.Schema.Types.ObjectId,
-			ref: "user",
+
+		farmer_ids: [
+			{
+				type: mongoose.Schema.Types.ObjectId,
+				ref: "user",
+			},
+		],
+		status: {
+			type: Number,
+			default: 0,
 		},
 	},
 	{
