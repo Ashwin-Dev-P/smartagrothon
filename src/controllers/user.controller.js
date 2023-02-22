@@ -145,6 +145,13 @@ const viewCartController = async (req, res) => {
   return await res.status(result.status).json(result);
 };
 
+//update location
+const updateLocationController = async(req, res)=>{
+  const { user_id, location } = req.body;
+  const result = await user_services.updateLocationService(user_id,location);
+  return await res.status(result.status).json(result);
+}
+
 module.exports = {
   register_user_controller,
   login_user_controller,
@@ -152,4 +159,5 @@ module.exports = {
   viewProfileController,
   addToCartController,
   viewCartController,
+  updateLocationController,
 };

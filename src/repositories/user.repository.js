@@ -90,6 +90,18 @@ const view_cart_repository = async (user_id) => {
   return user.cart || [];
 };
 
+//update location
+const updateLocationRepository = async(user_id,location)=>{
+  const filter = {  
+    _id: user_id
+  }
+
+  const update={
+    location: location,
+  }
+  await UserModel.updateOne( filter, update );
+}
+
 module.exports = {
   user_exists_repository,
   createUser,
@@ -97,4 +109,5 @@ module.exports = {
   getUserByIdRepository,
   add_to_cart_repository,
   view_cart_repository,
+  updateLocationRepository,
 };

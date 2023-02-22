@@ -46,6 +46,10 @@ var userSchema = new mongoose.Schema(
         ref: "product",
       },
     ],
+    location:{
+      type:String,
+      default: null,
+    }
   },
   {
     timestamps: true,

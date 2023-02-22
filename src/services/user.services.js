@@ -13,6 +13,7 @@ const {
   getUserByIdRepository,
   add_to_cart_repository,
   view_cart_repository,
+  updateLocationRepository,
 } = require("../repositories/user.repository");
 
 //import constants
@@ -26,7 +27,8 @@ const register_user_service = async (
   username,
   address,
   phone_number,
-  type
+  type,
+  location
 ) => {
   try {
     var result;
@@ -49,7 +51,8 @@ const register_user_service = async (
         username,
         address,
         phone_number,
-        type
+        type,
+        location,
       );
 
       const json_web_token = await setJWT(user._id);
@@ -235,10 +238,37 @@ const viewCartService = async (user_id) => {
   }
 };
 
+const updateLocationService = async(user_id, location)=>{
+  try{
+    await updateLocationRepository(user_id,location);
+
+    var result = {
+      message: "Location updated",
+      status:200
+    }
+
+    return result;
+
+  }catch (error) {
+    console.error("Try catch error caught");
+    console.error(error);
+
+    //check if error is class code 4.(Eg 400 , 401)
+    var class_code = error.status.toString()[0];
+
+    const result = {
+      message: class_code === "4" ? error.message : "Something went wrong",
+      status: error.status || 500,
+    };
+    return result;
+  }
+}
+
 module.exports = {
   register_user_service,
   login_user_service,
   viewProfileService,
   addToCartService,
   viewCartService,
+  updateLocationService,
 };

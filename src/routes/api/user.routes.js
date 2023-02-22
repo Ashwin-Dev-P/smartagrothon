@@ -35,4 +35,7 @@ router.post(
 //view cart
 router.post("/view_cart", user_controllers.viewCartController);
 
+//update location
+router.put("/location",user_controllers.updateLocationController);
+
 module.exports = router;
