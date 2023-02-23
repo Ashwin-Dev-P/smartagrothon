@@ -106,7 +106,7 @@ const updateLocationRepository = async (user_id, location) => {
 const getFarmersRepository = async () => {
 	const filter = { type: 0 };
 	return await UserModel.find(filter)
-		.select("username address phone_number email location")
+		.select("username address phone_number email location createdAt updatedAt")
 		.lean();
 };
 
