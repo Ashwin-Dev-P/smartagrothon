@@ -11,16 +11,16 @@ router.get("/profile/:user_id", user_controllers.viewProfileController);
 
 //login user
 router.post(
-  "/login",
+	"/login",
 
-  user_controllers.login_user_controller
+	user_controllers.login_user_controller,
 );
 
 //register user
 router.post(
-  "/",
+	"/",
 
-  user_controllers.register_user_controller
+	user_controllers.register_user_controller,
 );
 
 //logout
@@ -28,20 +28,23 @@ router.post("/logout", user_controllers.logout_controller);
 
 //add to cart
 router.post(
-  "/add_to_cart/product_id/:product_id",
-  user_controllers.addToCartController
+	"/add_to_cart/product_id/:product_id",
+	user_controllers.addToCartController,
 );
 
 //view cart
 router.post("/view_cart", user_controllers.viewCartController);
 
 //update location
-router.put("/location",user_controllers.updateLocationController);
+router.put("/location", user_controllers.updateLocationController);
 
 //get farmers
-router.get("/farmers",user_controllers.getFarmersController);
+router.get("/farmers", user_controllers.getFarmersController);
+
+//get consumers
+router.get("/consumers", user_controllers.getConsumerController);
 
 //get farmer details
-router.get("/farmer/:farmer_id",user_controllers.getFarmerDetailsController);
+router.get("/farmer/:farmer_id", user_controllers.getFarmerDetailsController);
 
 module.exports = router;

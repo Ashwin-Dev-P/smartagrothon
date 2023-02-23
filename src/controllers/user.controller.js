@@ -6,173 +6,180 @@ const config = require("../config/config");
 
 //to be moved inside utils
 const setCookie = (res, jwt) => {
-  console.log("jwt", jwt);
-  console.group("\nCookie");
-  console.time("cookie time");
+	console.log("jwt", jwt);
+	console.group("\nCookie");
+	console.time("cookie time");
 
-  //Set login cookies
-  const cookie_options = config.cookie.cookie_options;
-  const jwt_cookie_options = cookie_options.jwt_cookie_option;
-  const loggedIn_cookie_options = cookie_options.logged_in_cookie_option;
-  console.log(cookie_options, "cookie opyoond");
-  res.status(202).cookie("jwt", jwt, jwt_cookie_options);
-  res.status(202).cookie("loggedIn", true, loggedIn_cookie_options);
-  //Set login cookies ends
+	//Set login cookies
+	const cookie_options = config.cookie.cookie_options;
+	const jwt_cookie_options = cookie_options.jwt_cookie_option;
+	const loggedIn_cookie_options = cookie_options.logged_in_cookie_option;
+	console.log(cookie_options, "cookie opyoond");
+	res.status(202).cookie("jwt", jwt, jwt_cookie_options);
+	res.status(202).cookie("loggedIn", true, loggedIn_cookie_options);
+	//Set login cookies ends
 
-  console.timeEnd("cookie time");
-  console.groupEnd("Cookie");
-  return true;
+	console.timeEnd("cookie time");
+	console.groupEnd("Cookie");
+	return true;
 };
 
 //register a user
 const register_user_controller = async (req, res) => {
-  res.setHeader("Content-Type", "application/json");
+	res.setHeader("Content-Type", "application/json");
 
-  if (!req.body) {
-    console.error("No request body found");
-    const result = {
-      message: "Something went wrong",
-      status: 400,
-    };
-    return res.status(400).json(result);
-  }
+	if (!req.body) {
+		console.error("No request body found");
+		const result = {
+			message: "Something went wrong",
+			status: 400,
+		};
+		return res.status(400).json(result);
+	}
 
-  const {
-    email,
-    password,
-    password_confirmation,
-    username,
-    address,
-    phone_number,
-    type,
-  } = req.body;
+	const {
+		email,
+		password,
+		password_confirmation,
+		username,
+		address,
+		phone_number,
+		type,
+	} = req.body;
 
-  console.group("User registration");
+	console.group("User registration");
 
-  const final_result = await user_services.register_user_service(
-    email,
-    password,
-    password_confirmation,
-    username,
-    address,
-    phone_number,
-    type
-  );
-  const status = final_result.status;
+	const final_result = await user_services.register_user_service(
+		email,
+		password,
+		password_confirmation,
+		username,
+		address,
+		phone_number,
+		type,
+	);
+	const status = final_result.status;
 
-  console.groupEnd("User registration");
+	console.groupEnd("User registration");
 
-  if (status === 200) {
-    const jwt = final_result.jwt;
-    await setCookie(res, jwt);
-  }
-  return await res.status(status).json(final_result);
+	if (status === 200) {
+		const jwt = final_result.jwt;
+		await setCookie(res, jwt);
+	}
+	return await res.status(status).json(final_result);
 };
 
 //login user
 const login_user_controller = async (req, res) => {
-  res.setHeader("Content-Type", "application/json");
-  res.setHeader("Access-Control-Allow-Credentials", true);
-  res.setHeader(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
-  );
+	res.setHeader("Content-Type", "application/json");
+	res.setHeader("Access-Control-Allow-Credentials", true);
+	res.setHeader(
+		"Access-Control-Allow-Headers",
+		"Origin, X-Requested-With, Content-Type, Accept",
+	);
 
-  console.group("\nLogin");
-  console.time("login time");
+	console.group("\nLogin");
+	console.time("login time");
 
-  const { email, password } = req.body;
+	const { email, password } = req.body;
 
-  const final_result = await user_services.login_user_service(email, password);
+	const final_result = await user_services.login_user_service(email, password);
 
-  const status = final_result.status;
+	const status = final_result.status;
 
-  if (status === 200) {
-    const jwt = final_result.jwt;
-    await setCookie(res, jwt);
-  }
+	if (status === 200) {
+		const jwt = final_result.jwt;
+		await setCookie(res, jwt);
+	}
 
-  console.timeEnd("login time");
-  console.groupEnd("\nLogin");
+	console.timeEnd("login time");
+	console.groupEnd("\nLogin");
 
-  return await res.status(status).json(final_result);
+	return await res.status(status).json(final_result);
 };
 
 //logout
 const logout_controller = async (req, res) => {
-  console.log("req.cookies:", req.cookies);
-  //Clear cookies only if it is present since Mozilla Firefox browser causes warning if cleared cookies whoich are not present already.
-  if (req.cookies.jwt) {
-    await res.clearCookie("jwt");
-  } else {
-    console.warn("jwt cookie not found");
-  }
+	console.log("req.cookies:", req.cookies);
+	//Clear cookies only if it is present since Mozilla Firefox browser causes warning if cleared cookies whoich are not present already.
+	if (req.cookies.jwt) {
+		await res.clearCookie("jwt");
+	} else {
+		console.warn("jwt cookie not found");
+	}
 
-  if (req.cookies.loggedIn) {
-    await res.clearCookie("loggedIn");
-  } else {
-    console.warn("LoggedIn cookie not found");
-  }
+	if (req.cookies.loggedIn) {
+		await res.clearCookie("loggedIn");
+	} else {
+		console.warn("LoggedIn cookie not found");
+	}
 
-  return await res
-    .status(200)
-    .json({ message: "Logged out successfully", status: 200 });
+	return await res
+		.status(200)
+		.json({ message: "Logged out successfully", status: 200 });
 };
 
 //view profile
 const viewProfileController = async (req, res) => {
-  const { user_id } = req.params;
+	const { user_id } = req.params;
 
-  const result = await user_services.viewProfileService(user_id);
-  return await res.status(result.status).json(result);
+	const result = await user_services.viewProfileService(user_id);
+	return await res.status(result.status).json(result);
 };
 
 //add to cart
 const addToCartController = async (req, res) => {
-  const { user_id } = req.body;
-  const { product_id } = req.params;
+	const { user_id } = req.body;
+	const { product_id } = req.params;
 
-  const result = await user_services.addToCartService(user_id, product_id);
-  return await res.status(result.status).json(result);
+	const result = await user_services.addToCartService(user_id, product_id);
+	return await res.status(result.status).json(result);
 };
 
 //view cart
 const viewCartController = async (req, res) => {
-  const { user_id } = req.body;
+	const { user_id } = req.body;
 
-  const result = await user_services.viewCartService(user_id);
+	const result = await user_services.viewCartService(user_id);
 
-  return await res.status(result.status).json(result);
+	return await res.status(result.status).json(result);
 };
 
 //update location
-const updateLocationController = async(req, res)=>{
-  const { user_id, location } = req.body;
-  const result = await user_services.updateLocationService(user_id,location);
-  return await res.status(result.status).json(result);
-}
+const updateLocationController = async (req, res) => {
+	const { user_id, location } = req.body;
+	const result = await user_services.updateLocationService(user_id, location);
+	return await res.status(result.status).json(result);
+};
 
 //get farmers
-const getFarmersController = async(req, res)=>{
-  const result = await user_services.getFarmersService();
-  return await res.status(result.status).json(result);
-}
+const getFarmersController = async (req, res) => {
+	const result = await user_services.getFarmersService();
+	return await res.status(result.status).json(result);
+};
+
+//get consumers
+const getConsumerController = async (req, res) => {
+	const result = await user_services.getConsumersService();
+	return await res.status(result.status).json(result);
+};
 
 //get farmer details
-const getFarmerDetailsController = async(req, res)=>{
-  const { farmer_id } = req.params;
-  const result = await user_services.getFarmerDetailsService(farmer_id);
-  return await res.status(result.status).json(result);
-}
+const getFarmerDetailsController = async (req, res) => {
+	const { farmer_id } = req.params;
+	const result = await user_services.getFarmerDetailsService(farmer_id);
+	return await res.status(result.status).json(result);
+};
 
 module.exports = {
-  register_user_controller,
-  login_user_controller,
-  logout_controller,
-  viewProfileController,
-  addToCartController,
-  viewCartController,
-  updateLocationController,
-  getFarmersController,
-  getFarmerDetailsController,
+	register_user_controller,
+	login_user_controller,
+	logout_controller,
+	viewProfileController,
+	addToCartController,
+	viewCartController,
+	updateLocationController,
+	getFarmersController,
+	getConsumerController,
+	getFarmerDetailsController,
 };

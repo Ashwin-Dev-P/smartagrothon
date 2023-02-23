@@ -110,6 +110,14 @@ const getFarmersRepository = async () => {
 		.lean();
 };
 
+//get consumers
+const getConsumersRepository = async () => {
+	const filter = { type: 1 };
+	return await UserModel.find(filter)
+		.select("username address phone_number email createdAt updatedAt")
+		.lean();
+};
+
 //get farmer details
 const getFarmerDetailsRepository = async (farmer_id) => {
 	const select =
@@ -127,4 +135,5 @@ module.exports = {
 	updateLocationRepository,
 	getFarmersRepository,
 	getFarmerDetailsRepository,
+	getConsumersRepository,
 };
